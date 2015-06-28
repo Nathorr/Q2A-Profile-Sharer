@@ -2,7 +2,7 @@
 
 /*
 	Plugin Name: Q2A Profile Sharer
-	Plugin URI: 
+	Plugin URI: https://github.com/Nathorr/Q2A-Profile-Sharer
 	Plugin Description: Allows profiles to be shared in Facebook
 	Plugin Version: 1.0
 	Plugin Date: 2015-06-16
