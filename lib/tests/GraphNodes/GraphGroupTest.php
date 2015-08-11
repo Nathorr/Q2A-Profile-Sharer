@@ -23,26 +23,26 @@
  */
 namespace Facebook\Tests\GraphNodes;
 
+use Facebook\FacebookResponse;
 use Mockery as m;
 use Facebook\GraphNodes\GraphNodeFactory;
 
-class GraphSessionInfoTest extends \PHPUnit_Framework_TestCase
+class GraphGroupTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Facebook\FacebookResponse
+     * @var FacebookResponse
      */
     protected $responseMock;
 
     public function setUp()
     {
-        $this->responseMock = m::mock('\\Facebook\\FacebookResponse');
+        $this->responseMock = m::mock('\Facebook\FacebookResponse');
     }
 
-    public function testDatesGetCastToDateTime()
+    public function testCoverGetsCastAsGraphCoverPhoto()
     {
         $dataFromGraph = [
-            'expires_at' => 123,
-            'issued_at' => 1337,
+            'cover' => ['id' => '1337']
         ];
 
         $this->responseMock
@@ -50,13 +50,26 @@ class GraphSessionInfoTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($dataFromGraph);
         $factory = new GraphNodeFactory($this->responseMock);
+        $graphNode = $factory->makeGraphGroup();
 
-        $graphNode = $factory->makeGraphSessionInfo();
+        $cover = $graphNode->getCover();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphCoverPhoto', $cover);
+    }
 
-        $expires = $graphNode->getExpiresAt();
-        $issuedAt = $graphNode->getIssuedAt();
+    public function testVenueGetsCastAsGraphLocation()
+    {
+        $dataFromGraph = [
+            'venue' => ['id' => '1337']
+        ];
 
-        $this->assertInstanceOf('DateTime', $expires);
-        $this->assertInstanceOf('DateTime', $issuedAt);
+        $this->responseMock
+            ->shouldReceive('getDecodedBody')
+            ->once()
+            ->andReturn($dataFromGraph);
+        $factory = new GraphNodeFactory($this->responseMock);
+        $graphNode = $factory->makeGraphGroup();
+
+        $venue = $graphNode->getVenue();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphLocation', $venue);
     }
 }

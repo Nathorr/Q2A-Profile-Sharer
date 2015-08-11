@@ -24,79 +24,49 @@
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphLocation
+ * Class GraphCoverPhoto
  *
  * @package Facebook
  */
-class GraphLocation extends GraphNode
+class GraphCoverPhoto extends GraphNode
 {
     /**
-     * Returns the street component of the location
+     * Returns the id of cover if it exists
+     *
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->getField('id');
+    }
+    
+    /**
+     * Returns the source of cover if it exists
      *
      * @return string|null
      */
-    public function getStreet()
+    public function getSource()
     {
-        return $this->getField('street');
+        return $this->getField('source');
     }
 
     /**
-     * Returns the city component of the location
+     * Returns the offset_x of cover if it exists
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getCity()
+    public function getOffsetX()
     {
-        return $this->getField('city');
+        return $this->getField('offset_x');
     }
 
     /**
-     * Returns the state component of the location
+     * Returns the offset_y of cover if it exists
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getState()
+    public function getOffsetY()
     {
-        return $this->getField('state');
-    }
-
-    /**
-     * Returns the country component of the location
-     *
-     * @return string|null
-     */
-    public function getCountry()
-    {
-        return $this->getField('country');
-    }
-
-    /**
-     * Returns the zipcode component of the location
-     *
-     * @return string|null
-     */
-    public function getZip()
-    {
-        return $this->getField('zip');
-    }
-
-    /**
-     * Returns the latitude component of the location
-     *
-     * @return float|null
-     */
-    public function getLatitude()
-    {
-        return $this->getField('latitude');
-    }
-
-    /**
-     * Returns the street component of the location
-     *
-     * @return float|null
-     */
-    public function getLongitude()
-    {
-        return $this->getField('longitude');
+        return $this->getField('offset_y');
     }
 }

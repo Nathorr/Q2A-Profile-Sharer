@@ -1,7 +1,7 @@
 <card>
 # File Uploading with the Facebook SDK for PHP
 
-Uploading files to the Graph API is made a breeze with the PHP SDK.
+Uploading files to the Graph API is made a breeze with the Facebook SDK for PHP.
 </card>
 
 <card>
@@ -47,9 +47,9 @@ try {
   exit;
 }
 
-$graphObject = $response->getGraphObject();
+$graphNode = $response->getGraphNode();
 
-echo 'Photo ID: ' . $graphObject['id'];
+echo 'Photo ID: ' . $graphNode['id'];
 ~~~~
 
 > **Note:** Although you can use `fileToUpload()` to upload a remote file, it is more efficient to just point the Graph request to the the remote file with the `url` param.

@@ -1,7 +1,7 @@
 <card>
 # Video Uploading with the Facebook SDK for PHP
 
-Uploading video files to the Graph API is made a breeze with the PHP SDK.
+Uploading video files to the Graph API is made a breeze with the SDK for PHP.
 </card>
 
 <card>
@@ -46,8 +46,8 @@ try {
   exit;
 }
 
-$graphObject = $response->getGraphObject();
+$graphNode = $response->getGraphNode();
 
-echo 'Video ID: ' . $graphObject['id'];
+echo 'Video ID: ' . $graphNode['id'];
 ~~~~
 </card>

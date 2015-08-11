@@ -5,9 +5,9 @@
 	Plugin URI: https://github.com/Nathorr/Q2A-Profile-Sharer
 	Plugin Description: Allows profiles to be shared in Facebook
 	Plugin Version: 1.0
-	Plugin Date: 2015-06-16
+	Plugin Date: 2015-06-26
 	Plugin Author: Nathorr
-	Plugin Author URI:
+	Plugin Author URI: http://nathorr.com
 	Plugin License: GPLv2
 	Plugin Minimum Question2Answer Version: 1.5
 	Plugin Update Check URI: 

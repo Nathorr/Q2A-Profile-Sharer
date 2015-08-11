@@ -20,7 +20,7 @@ class qa_profile_sharer_page {
 		$fb = new Facebook\Facebook([
 			'app_id'				=> $appid,
 			'app_secret'			=> $secret,
-			'default_graph_version'	=> 'v2.3',
+			'default_graph_version'	=> 'v2.4',
 			]);
 
 		$qa_content = qa_content_prepare();
@@ -39,9 +39,9 @@ class qa_profile_sharer_page {
 
 			$res = $fb->post( '/me/feed', array(
 				'link'			=> 'http://nathorr.com/qeta/user/' . qa_get_logged_in_handle() . '/',
-				'name'			=> 'My profile - Nathorr Q&A',
-				'picture'		=> 'http://oi61.tinypic.com/2j1otpg.jpg',
-				'description'	=> 'Nathorr Q&A helps your online community to share knowledge. Q&A-based sites are often used in schools and universities during coding classes.',
+				'name'			=> qa_opt('fb_shared_message_title'),
+				'picture'		=> qa_opt('fb_shared_message_picture'),
+				'description'	=> qa_opt('fb_shared_message_description'),
 				'message'		=> 'I have scored ' . qa_get_logged_in_points() . ' points and achieved some nice badges in Nathorr Q&A, check it out!'
 				), $accessToken);
 

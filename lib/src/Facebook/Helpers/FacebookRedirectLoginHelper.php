@@ -192,8 +192,8 @@ class FacebookRedirectLoginHelper
         }
 
         $params = [
-        'next' => $next,
-        'access_token' => $accessToken->getValue(),
+            'next' => $next,
+            'access_token' => $accessToken->getValue(),
         ];
 
         return 'https://www.facebook.com/logout.php?' . http_build_query($params, null, $separator);
@@ -245,6 +245,7 @@ class FacebookRedirectLoginHelper
         if (!$code = $this->getCode()) {
             return null;
         }
+
         //$this->validateCsrf();
 
         $redirectUrl = $redirectUrl ?: $this->urlDetectionHandler->getCurrentUrl();

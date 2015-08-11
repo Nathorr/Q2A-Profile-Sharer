@@ -27,7 +27,7 @@ use Facebook\FacebookResponse;
 use Mockery as m;
 use Facebook\GraphNodes\GraphNodeFactory;
 
-class GraphUserTest extends \PHPUnit_Framework_TestCase
+class GraphEventTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var FacebookResponse
@@ -36,13 +36,13 @@ class GraphUserTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->responseMock = m::mock('\\Facebook\\FacebookResponse');
+        $this->responseMock = m::mock('\Facebook\FacebookResponse');
     }
 
-    public function testDatesGetCastToDateTime()
+    public function testCoverGetsCastAsGraphCoverPhoto()
     {
         $dataFromGraph = [
-            'birthday' => '1984-01-01',
+            'cover' => ['id' => '1337']
         ];
 
         $this->responseMock
@@ -50,26 +50,16 @@ class GraphUserTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($dataFromGraph);
         $factory = new GraphNodeFactory($this->responseMock);
-        $graphNode = $factory->makeGraphUser();
+        $graphObject = $factory->makeGraphEvent();
 
-        $birthday = $graphNode->getBirthday();
-
-        $this->assertInstanceOf('DateTime', $birthday);
+        $cover = $graphObject->getCover();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphCoverPhoto', $cover);
     }
 
-    public function testPagePropertiesWillGetCastAsGraphPageObjects()
+    public function testPlaceGetsCastAsGraphPage()
     {
         $dataFromGraph = [
-            'id' => '123',
-            'name' => 'Foo User',
-            'hometown' => [
-                'id' => '1',
-                'name' => 'Foo Place',
-            ],
-            'location' => [
-                'id' => '2',
-                'name' => 'Bar Place',
-            ],
+            'place' => ['id' => '1337']
         ];
 
         $this->responseMock
@@ -77,24 +67,16 @@ class GraphUserTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($dataFromGraph);
         $factory = new GraphNodeFactory($this->responseMock);
-        $graphNode = $factory->makeGraphUser();
+        $graphObject = $factory->makeGraphEvent();
 
-        $hometown = $graphNode->getHometown();
-        $location = $graphNode->getLocation();
-
-        $this->assertInstanceOf('\\Facebook\\GraphNodes\\GraphPage', $hometown);
-        $this->assertInstanceOf('\\Facebook\\GraphNodes\\GraphPage', $location);
+        $place = $graphObject->getPlace();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphPage', $place);
     }
 
-    public function testUserPropertiesWillGetCastAsGraphUserObjects()
+    public function testPictureGetsCastAsGraphPicture()
     {
         $dataFromGraph = [
-            'id' => '123',
-            'name' => 'Foo User',
-            'significant_other' => [
-                'id' => '1337',
-                'name' => 'Bar User',
-            ],
+            'picture' => ['id' => '1337']
         ];
 
         $this->responseMock
@@ -102,24 +84,16 @@ class GraphUserTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($dataFromGraph);
         $factory = new GraphNodeFactory($this->responseMock);
-        $graphNode = $factory->makeGraphUser();
+        $graphObject = $factory->makeGraphEvent();
 
-        $significantOther = $graphNode->getSignificantOther();
-
-        $this->assertInstanceOf('\\Facebook\\GraphNodes\\GraphUser', $significantOther);
+        $picture = $graphObject->getPicture();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphPicture', $picture);
     }
 
-    public function testPicturePropertiesWillGetCastAsGraphPictureObjects()
+    public function testParentGroupGetsCastAsGraphGroup()
     {
         $dataFromGraph = [
-            'id' => '123',
-            'name' => 'Foo User',
-            'picture' => [
-                'is_silhouette' => true,
-                'url' => 'http://foo.bar',
-                'width' => 200,
-                'height' => 200,
-            ],
+            'parent_group' => ['id' => '1337']
         ];
 
         $this->responseMock
@@ -127,14 +101,9 @@ class GraphUserTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn($dataFromGraph);
         $factory = new GraphNodeFactory($this->responseMock);
-        $graphNode = $factory->makeGraphUser();
+        $graphObject = $factory->makeGraphEvent();
 
-        $Picture = $graphNode->getPicture();
-
-        $this->assertInstanceOf('\\Facebook\\GraphNodes\\GraphPicture', $Picture);
-        $this->assertTrue($Picture->isSilhouette());
-        $this->assertEquals(200, $Picture->getWidth());
-        $this->assertEquals(200, $Picture->getHeight());
-        $this->assertEquals('http://foo.bar', $Picture->getUrl());
+        $parentGroup = $graphObject->getParentGroup();
+        $this->assertInstanceOf('\Facebook\GraphNodes\GraphGroup', $parentGroup);
     }
 }

@@ -27,7 +27,7 @@ class qa_profile_sharer_widget {
 			$fb = new Facebook\Facebook([
 				'app_id'				=> $appid,
 				'app_secret'			=> $secret,
-				'default_graph_version'	=> 'v2.3',
+				'default_graph_version'	=> 'v2.4',
 				]);
 
 			$helper = $fb->getRedirectLoginHelper();
@@ -40,6 +40,12 @@ class qa_profile_sharer_widget {
 
 	function option_default($option)
 	{
+		if ($option=='fb_shared_message_title')
+			return 'My profile - Q&A';
+		if ($option=='fb_shared_message_picture')
+			return 'http://oi61.tinypic.com/2j1otpg.jpg';
+		if ($option=='fb_shared_message_description')
+			return 'Q&A helps your online community to share knowledge.';
 		if ($option=='fb_share_permit_edit') {
 			require_once QA_INCLUDE_DIR.'qa-app-options.php';
 			return QA_PERMIT_USERS;
@@ -59,6 +65,9 @@ class qa_profile_sharer_widget {
 		if (qa_clicked('fb_save_button')) {
 			qa_opt('fb_app_id', qa_post_text('fb_app_id_field'));
 			qa_opt('fb_app_secret', qa_post_text('fb_app_secret_field'));
+			qa_opt('fb_shared_message_title', qa_post_text('fb_shared_message_title_field'));
+			qa_opt('fb_shared_message_picture', qa_post_text('fb_shared_message_picture_field'));
+			qa_opt('fb_shared_message_description', qa_post_text('fb_shared_message_description_field'));
 			qa_opt('fb_share_permit_edit', (int)qa_post_text('fb_share_pe_field'));
 			$saved=true;
 		}
@@ -79,6 +88,21 @@ class qa_profile_sharer_widget {
 					'error' => $ready ? null : 'To use Facebook Login, please <a href="http://developers.facebook.com/setup/" target="_blank">set up a Facebook application</a>.',
 					),
 				array(
+					'label' => 'Title of the shared message:',
+					'value' => qa_html(qa_opt('fb_shared_message_title')),
+					'tags' => 'name="fb_shared_message_title_field"',
+					),
+				array(
+					'label' => 'Link to the picture of shared message:',
+					'value' => qa_html(qa_opt('fb_shared_message_picture')),
+					'tags' => 'name="fb_shared_message_picture_field"',
+					),
+				array(
+					'label' => 'Description of the shared message:',
+					'value' => qa_html(qa_opt('fb_shared_message_description')),
+					'tags' => 'name="fb_shared_message_description_field"',
+					),
+				array(
 					'label' => 'Allow using:',
 					'type' => 'select',
 					'value' => @$permitoptions[qa_opt('fb_share_permit_edit')],
@@ -86,13 +110,12 @@ class qa_profile_sharer_widget {
 					'tags' => 'name="fb_share_pe_field"',
 					),
 				),
-			'buttons' => array(
-				array(
-					'label' => 'Save Changes',
-					'tags' => 'name="fb_save_button"',
-					),
-				),
-			);
-	}
+'buttons' => array(
+	array(
+		'label' => 'Save Changes',
+		'tags' => 'name="fb_save_button"',
+		),
+	),
+);
 }
-
+}
